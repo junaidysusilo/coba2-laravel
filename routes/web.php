@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardPostController;
 use App\Models\Category;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +24,8 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/', function () {
     return view('home', [
         "title" => "Home",
-        "active" => "home"
     ]);
-});
+})->name("home");
 
 Route::get('/about', function () {
     return view('about', [
@@ -33,18 +33,24 @@ Route::get('/about', function () {
         "name" => "Junaidy Susilo",
         "email" => "junaidysusilox@gmail.com",
         "jurusan" => "Teknik Informatika",
-        "image" => "jnd.png",
-        "active" => 'about'
+        "image" => "jnd.png"
     ]);
 });
 
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('/post/{post:slug}', [PostController::class, 'show']);
+Route::controller(PostController::class)
+    ->as("posts.")
+    ->group(function () {
+        Route::get("/posts", "index")->name("index");
+        // posts.index
+        Route::get("/post/{post:slug}", "index")->name("show");
+        //posts.show
+    });
+// Route::get('/posts', [PostController::class, 'index']);
+// Route::get('/post/{post:slug}', [PostController::class, 'show']);
 
 Route::get('/categories', function () {
     return view('categories', [
         'title' => 'Post Categories',
-        'active' => 'categories',
         'categories' => Category::all()
     ]);
 });
@@ -59,3 +65,7 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->middleware('auth');
+
+Route::resource('/dashboard/posts', DashboardPostController::class)
+    ->names("dasboard.posts")
+    ->middleware('auth');

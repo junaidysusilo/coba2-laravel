@@ -7,14 +7,14 @@
     <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
         <ul class="nav flex-column">
             <li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
-                <svg class="bi"><use xlink:href="#house-fill"/></svg>
+            <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page" href="/dashboard">
+                <i class="bi bi-house-fill"></i> 
                 Dashboard
             </a>
             </li>
             <li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-2" href="#">
-                <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+            <a class="nav-link {{ Request::is('dashboard/posts') ? 'active' : '' }}" href="/dashboard/posts">
+                <i class="bi bi-file-earmark-text"></i>
                 My Posts
             </a>
             </li>

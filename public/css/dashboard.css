@@ -14,6 +14,7 @@
     position: sticky;
     top: 48px;
   }
+
   .navbar-search {
     display: block;
   }
@@ -22,6 +23,7 @@
 .sidebar .nav-link {
   font-size: .875rem;
   font-weight: 500;
+  color: black;
 }
 
 .sidebar .nav-link.active {
