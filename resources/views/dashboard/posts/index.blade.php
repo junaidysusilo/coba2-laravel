@@ -6,10 +6,11 @@
 </div>
 
 @if(session()->has('success'))
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success col-lg-8" role="alert">
                 {{ session('success') }}
             </div>
 @endif
+
 <div class="table-responsive col-lg-8">
     <a href="/dashboard/posts/create" class="btn btn-primary mb-3">Create new post</a>
     <table class="table table-striped table-sm">
@@ -29,8 +30,12 @@
                 <td>{{ $post->category->name }}</td>
                 <td>
                     <a href="/dashboard/posts/{{ $post->slug }}" class="btn btn-info"><i class="bi bi-eye"></i></a>
-                    <a href="" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                    <a href="" class="btn btn-danger"><i class="bi bi-x-circle"></i></a>
+                    <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
+                    <form action="/dashboard/posts/{{ $post->slug }}" method="post" class="d-inline">
+                        @method('delete')
+                        @csrf
+                        <button class="btn btn-danger" onclick="return confirm('Are you sure?')" border-0><i class="bi bi-x-circle"></i></button>
+                    </form>
                 </td>
             </tr>
         @endforeach
