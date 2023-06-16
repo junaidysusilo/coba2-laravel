@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\DashboardPostController;
 use App\Models\Category;
 use Illuminate\Routing\Router;
@@ -37,16 +37,16 @@ Route::get('/about', function () {
     ]);
 });
 
-Route::controller(PostController::class)
-    ->as("posts.")
-    ->group(function () {
-        Route::get("/posts", "index")->name("index");
-        // posts.index
-        Route::get("/post/{post:slug}", "index")->name("show");
-        //posts.show
-    });
-// Route::get('/posts', [PostController::class, 'index']);
-// Route::get('/post/{post:slug}', [PostController::class, 'show']);
+// Route::controller(PostController::class)
+//     ->as("posts.")
+//     ->group(function () {
+//         Route::get("/posts", "index")->name("index");
+//         // posts.index
+//         Route::get("/post/{post:slug}", "index")->name("show");
+//         //posts.show
+//     });
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/post/{post:slug}', [PostController::class, 'show']);
 
 Route::get('/categories', function () {
     return view('categories', [
@@ -70,3 +70,5 @@ Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'check
 Route::resource('/dashboard/posts', DashboardPostController::class)
     ->names("dashboard.posts")
     ->middleware('auth');
+
+Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('admin');
